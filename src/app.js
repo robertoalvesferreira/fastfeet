@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-expressions */
+import 'dotenv/config';
 import express from 'express';
 import routes from './routes';
+import './database';
 
 class App {
   constructor() {
