@@ -19,6 +19,11 @@ class User extends Model {
         user.password = await bcrypt.hash(user.password, 8);
       }
     });
+    return this;
+  }
+
+  static associate(models) {
+    this.belongsTo(models.Profile, { foreignKey: 'profile_id', as: 'profile' });
   }
 
   checkPassword(password) {
