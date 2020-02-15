@@ -15,7 +15,7 @@ class Courier extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Profile, { foreignKey: 'avatar_id', as: 'file' });
+    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'file' });
   }
 }
 export default Courier;

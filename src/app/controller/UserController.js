@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import User from '../models/User';
 import Profile from '../models/Profile';
-import Permission from './Permission';
+import Permission from '../../util/Permission';
 
 class UserController {
   async store(req, res) {

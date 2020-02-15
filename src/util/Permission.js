@@ -1,6 +1,6 @@
-import Recipient from '../models/Recipient';
-import User from '../models/User';
-import Profile from '../models/Profile';
+import Recipient from '../app/models/Recipient';
+import User from '../app/models/User';
+import Profile from '../app/models/Profile';
 
 class Permission {
   async validation(id) {
