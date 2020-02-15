@@ -7,6 +7,7 @@ import authMiddleware from './app/middlewares/auth';
 import SessionController from './app/controller/SessionController';
 import RecipientController from './app/controller/RecipientController';
 import FileController from './app/controller/FileController';
+import CourierController from './app/controller/CourierController';
 
 const routes = new Router();
 const upload = multer(multerCongfig);
@@ -21,4 +22,6 @@ routes.put('/recipient', RecipientController.update);
 routes.get('/recipient/:id', RecipientController.index2);
 routes.get('/recipient', RecipientController.index);
 routes.post('/file', upload.single('file'), FileController.store);
+routes.post('/courier', CourierController.store);
+routes.get('/courier', CourierController.index);
 export default routes;

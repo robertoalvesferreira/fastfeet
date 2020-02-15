@@ -43,6 +43,10 @@ class UserController {
       ),
     });
 
+    if (!(await Permission.validation(req.userId))) {
+      return res.status(400).json({ error: 'Sem permissão' });
+    }
+
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Falha na validação' });
     }
@@ -50,10 +54,6 @@ class UserController {
     const { oldPassword } = req.body;
 
     const user = await User.findByPk(req.userId); // buscar usuario
-
-    if (!(await Permission.validation(req.userId))) {
-      return res.status(400).json({ error: 'Sem permissão' });
-    }
 
     if (oldPassword && !(await user.checkPassword(oldPassword))) {
       return res.status(400).json({ error: 'Password does not match' });
