@@ -11,10 +11,8 @@ import CourierController from './app/controller/CourierController';
 
 const routes = new Router();
 const upload = multer(multerCongfig);
-
 routes.post('/sessions', SessionController.store);
 routes.post('/users', UserController.store);
-
 routes.use(authMiddleware);
 routes.post('/recipient', RecipientController.store);
 routes.put('/users', UserController.update);
@@ -24,4 +22,5 @@ routes.get('/recipient', RecipientController.index);
 routes.post('/file', upload.single('file'), FileController.store);
 routes.post('/courier', CourierController.store);
 routes.get('/courier', CourierController.index);
+routes.put('/courier/:id', CourierController.update);
 export default routes;
