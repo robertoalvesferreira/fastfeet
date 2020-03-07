@@ -1,7 +1,18 @@
 import * as Yup from 'yup';
+import {
+  startOfHour,
+  parseISO,
+  isBefore,
+  format,
+  subHours,
+  getHours,
+} from 'date-fns';
 import Order from '../models/Order';
 import Courier from '../models/Courier';
 import Recipient from '../models/Recipient';
+import Mail from '../../lib/Mail';
+// import CorrierEmail from '../jobs/CourrierEmail';
+// import Queue from '../../lib/Queue';
 
 class OrderController {
   async index(req, res) {
@@ -12,7 +23,7 @@ class OrderController {
   async store(req, res) {
     const schema = Yup.object().shape({
       product: Yup.string().required(),
-      start_date: Yup.date().required(),
+      // start_date: Yup.date().required(),
       courier_id: Yup.number().required(),
       recipient_id: Yup.number().required(),
     });
@@ -22,14 +33,19 @@ class OrderController {
         error: 'Parametros invalidos para criação de entrega.',
       });
     }
+    // const { start_date } = req.body;
+    // const hourStart = getHours(parseISO(start_date));
+
     // validar entregador
     const { courier_id } = req.body;
-    if (courier_id) {
-      const courier = await Courier.findByPk(courier_id);
-      if (!courier) {
-        return res.json({ error: 'Não existe esse intregador' });
-      }
+    // if (courier_id) {
+    const courier = await Courier.findByPk(courier_id);
+    const { name, email } = courier;
+    console.log(name, email);
+    if (!courier) {
+      return res.json({ error: 'Não existe esse intregador' });
     }
+    // }
 
     const { recipient_id } = req.body;
     if (recipient_id) {
@@ -40,6 +56,13 @@ class OrderController {
     }
 
     const order = await Order.create(req.body);
+
+    await Mail.sendMail({
+      to: `${name} <${email}>`,
+      subject: 'Produto disponivel',
+      text: 'Voce tem um novo produto para retirada',
+    });
+
     return res.json(order);
   }
 
