@@ -29,4 +29,7 @@ routes.get('/courier', CourierController.index);
 routes.put('/courier/:id', CourierController.update);
 
 routes.get('/order', OrderController.index);
+routes.post('/order', OrderController.store);
+routes.put('/order/:id', OrderController.update);
+
 export default routes;

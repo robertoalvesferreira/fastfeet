@@ -31,6 +31,13 @@ class CourierController {
       email: Yup.string().email(),
     });
 
+    const courier = await Courier.findByPk(req.params.id);
+    console.log(courier);
+
+    if (courier === null || courier === undefined) {
+      return res.status(400).json({ error: 'Parametro Invalido' });
+    }
+
     // validar se email veio como parametro
     // validar se email esta igual email anterior
     // validar se nao existe outro email igual o novo email
@@ -55,7 +62,7 @@ class CourierController {
 
       console.log(email);
     }
-    const courier = await Courier.findByPk(req.params.id);
+
     const response = await courier.update(req.body);
     return res.json(response);
   }
