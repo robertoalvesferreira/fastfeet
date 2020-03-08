@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import 'dotenv/config';
+// import './bootstrap';
 import express from 'express';
 import routes from './routes';
 import './database';

@@ -9,11 +9,15 @@ import RecipientController from './app/controller/RecipientController';
 import FileController from './app/controller/FileController';
 import CourierController from './app/controller/CourierController';
 import OrderController from './app/controller/OrderController';
+import CourierOrderController from './app/controller/CourierOrderController';
 
 const routes = new Router();
 const upload = multer(multerCongfig);
 routes.post('/sessions', SessionController.store);
 routes.post('/users', UserController.store);
+// routes.post('/users', (req, res) => {
+//   return res.json({ id: 1 });
+// });
 routes.use(authMiddleware);
 routes.put('/users', UserController.update);
 
@@ -31,5 +35,8 @@ routes.put('/courier/:id', CourierController.update);
 routes.get('/order', OrderController.index);
 routes.post('/order', OrderController.store);
 routes.put('/order/:id', OrderController.update);
+routes.get('/order/:id', OrderController.show);
+
+routes.get('/courier/:id/couriers', CourierOrderController.index);
 
 export default routes;

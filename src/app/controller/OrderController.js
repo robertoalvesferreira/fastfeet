@@ -33,19 +33,14 @@ class OrderController {
         error: 'Parametros invalidos para criação de entrega.',
       });
     }
-    // const { start_date } = req.body;
-    // const hourStart = getHours(parseISO(start_date));
 
-    // validar entregador
     const { courier_id } = req.body;
-    // if (courier_id) {
     const courier = await Courier.findByPk(courier_id);
     const { name, email } = courier;
     console.log(name, email);
     if (!courier) {
       return res.json({ error: 'Não existe esse intregador' });
     }
-    // }
 
     const { recipient_id } = req.body;
     if (recipient_id) {
@@ -82,15 +77,18 @@ class OrderController {
     }
 
     const { recipient_id } = req.body;
-    if (recipient_id) {
-      const recipient = await Recipient.findByPk(recipient_id);
-      if (!recipient) {
-        return res.json({ error: 'Não existe esse recebedor' });
-      }
+    const recipient = await Recipient.findByPk(recipient_id);
+    if (!recipient) {
+      return res.json({ error: 'Não existe esse recebedor' });
     }
 
     const response = await order.update(req.body);
     return res.json(response);
+  }
+
+  async show(req, res) {
+    const order = await Order.findByPk(req.params.id);
+    return res.json(order);
   }
 }
 
